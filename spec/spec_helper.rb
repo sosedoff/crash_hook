@@ -23,3 +23,18 @@ end
 def raise_endpoint(exception, msg)
   proc { |e| raise exception, msg }
 end
+
+def sample_configuration
+  CrashHook::Configuration.new(
+    :url => 'http://localhost:4567/sample'
+  )
+end
+
+def build_stack(endpoint = safe_endpoint, options={})
+  options[:url] ||= 'http://localhost:4567/exception'
+  
+  Rack::Builder.new do
+    use CrashHook::Middleware, options
+    run endpoint
+  end
+end
