@@ -31,6 +31,8 @@ module CrashHook
           :version    => CrashHook::VERSION
         }
       }
+      
+      @payload.merge!(:framework => 'rails') if defined?(Rails) 
     end
     
     # Send notification to the endpoint
