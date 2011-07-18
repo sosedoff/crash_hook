@@ -3,6 +3,7 @@ require 'crash_hook/errors'
 require 'crash_hook/configuration'
 require 'crash_hook/middleware'
 require 'crash_hook/request'
+require 'crash_hook/serializer'
 require 'crash_hook/crash'
 
 module CrashHook
@@ -21,6 +22,6 @@ module CrashHook
     if @@config.nil?
       raise CrashHook::ConfigurationError, "No configuration were provided."
     end
-    CrashHook::Crash.new(@@config, exception, env).notify
+    CrashHook::Crash.new(@@config, exception, env)
   end
 end

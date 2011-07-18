@@ -4,6 +4,7 @@ require 'multi_json'
 module CrashHook
   class Crash
     include CrashHook::Request
+    include CrashHook::Serializer
     
     # Initialize a new Crash object
     #   config    => CrashHook::Configuration object
@@ -26,7 +27,7 @@ module CrashHook
           :backtrace  => exception.backtrace,
           :timestamp  => Time.now.utc
         },
-        :environment  => env,
+        :environment  => clean_non_serializable_data(env),
         :crash_hook   => {
           :version    => CrashHook::VERSION
         }
