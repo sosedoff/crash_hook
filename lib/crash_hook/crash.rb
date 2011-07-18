@@ -15,8 +15,11 @@ module CrashHook
       
       @config = config
       @payload = {
-        :exception   => exception,
-        :backtrace   => exception.backtrace,
+        :exception   => {
+          :class     => exception.class.to_s,
+          :message   => exception.message,
+          :backtrace => exception.backtrace
+        },
         :environment => env
       }
     end
