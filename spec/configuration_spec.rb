@@ -15,15 +15,6 @@ describe 'CrashHook::Configuration' do
     }.should raise_error CrashHook::ConfigurationError, "foo is not a valid :method option."
   end
   
-  it 'raises an exception on invalid class name' do
-    proc {
-      c = CrashHook::Configuration.new(
-        :url => 'http://foo.com',
-        :ignore => ['FakeError']
-      )  
-    }.should raise_error CrashHook::ConfigurationError, "undefined object: FakeError"
-  end
-  
   it 'has an unique list of ignored exceptions' do
     c = CrashHook::Configuration.new(
       :url => 'http://foo.com',

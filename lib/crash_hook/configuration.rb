@@ -29,20 +29,14 @@ module CrashHook
       
       @ignore = []
       @ignore += options[:ignore] if options[:ignore].kind_of?(Array)
-      @ignore.map! do |c|
-        begin
-          c.to_s.strip.constantize
-        rescue NameError
-          raise CrashHook::ConfigurationError, "undefined object: #{c}"
-        end
-      end
+      @ignore.map! { |c| c.to_s }
       @ignore.uniq!
     end
     
     # Returns true if specified exception class is ignored
     #
     def ignore_exception?(ex)
-      @ignore.include?(ex) 
+      @ignore.include?(ex.to_s) 
     end
   end
 end
