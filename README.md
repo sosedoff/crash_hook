@@ -12,27 +12,33 @@ It sends a http request with exception information, backtrace and environment de
 
 In Rails 3 apps:
 
+    ``` ruby
     YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
       :url => 'YOUR_URL'
     }
+    ```
     
 You can add any exceptions into ignore list:
 
+    ``` ruby
     YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
       :url => 'YOUR_URL',
       :ignore => [
         'NoMethodError'
       ]
     }
+    ```
 
 In other rack apps (config.ru):
 
+    ``` ruby
     require 'crash_hook'
 
     use CrashHook::Middleware {
       :url => 'YOUR_URL',
       :method => :post
     }
+    ```
     
 ## Options
 
