@@ -15,6 +15,15 @@ In Rails 3 apps:
     YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
       :url => 'YOUR_URL'
     }
+    
+You can add any exceptions into ignore list:
+
+    YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
+      :url => 'YOUR_URL',
+      :ignore => [
+        'NoMethodError'
+      ]
+    }
 
 In other rack apps (config.ru):
 
