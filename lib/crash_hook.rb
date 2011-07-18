@@ -22,6 +22,6 @@ module CrashHook
     if @@config.nil?
       raise CrashHook::ConfigurationError, "No configuration were provided."
     end
-    CrashHook::Crash.new(@@config, exception, env)
+    CrashHook::Crash.new(@@config, exception, env).notify
   end
 end

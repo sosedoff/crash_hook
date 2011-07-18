@@ -1,5 +1,4 @@
 require 'rest-client'
-require 'multi_json'
 
 module CrashHook
   class Crash
@@ -39,7 +38,6 @@ module CrashHook
       headers = {}
       data = {:crash => @payload}.merge(@config.extra_params)
       if @config.format == :json
-        data = MultiJson.encode(data) 
         headers[:content_type] = 'application/json'
       end
       
