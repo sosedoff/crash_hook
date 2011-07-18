@@ -3,12 +3,11 @@ require 'rest-client'
 module CrashHook
   class Crash
     include CrashHook::Request
-    include CrashHook::Serializer
     
     # Initialize a new Crash object
     #   config    => CrashHook::Configuration object
     #   exception => Exception raised from middleware
-    #   env       => Environment variabled
+    #   env       => Environment variable
     #
     def initialize(config, exception=nil, env={})
       unless config.kind_of?(CrashHook::Configuration)
@@ -19,30 +18,12 @@ module CrashHook
       raise ArgumentError, "Environment required!" if env.nil?
       
       @config = config
-      @payload = {
-        :exception    => {
-          :class_name => exception.class.to_s,
-          :message    => exception.message,
-          :backtrace  => exception.backtrace,
-          :timestamp  => Time.now.utc
-        },
-        :environment  => clean_non_serializable_data(env),
-        :crash_hook   => {
-          :version    => CrashHook::VERSION
-        }
-      }
-      
-      @payload.merge!(:framework => 'rails') if defined?(Rails) 
+      @payload = CrashHook::Payload.new(exception, env, @config.extra_params)
     end
     
     # Send notification to the endpoint
     def notify
-      headers = {}
-      data = {:crash => @payload}.merge(@config.extra_params)
-      if @config.format == :json
-        headers[:content_type] = 'application/json'
-      end
-      
+      data = @config.format == :json ? @payload.to_json : @payload.to_hash
       begin
         request(@config.method, @config.url, data, @config.format)
         true

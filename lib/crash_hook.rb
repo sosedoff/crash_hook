@@ -4,6 +4,7 @@ require 'crash_hook/configuration'
 require 'crash_hook/middleware'
 require 'crash_hook/request'
 require 'crash_hook/serializer'
+require 'crash_hook/payload'
 require 'crash_hook/crash'
 
 module CrashHook
