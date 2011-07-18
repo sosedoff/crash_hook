@@ -3,6 +3,12 @@ module CrashHook
     TIMEOUT = 4
     OPEN_TIMEOUT = 4
     
+    CONTENT_TYPES = {
+      :form => 'application/x-www-form-urlencoded',
+      :json => 'application/json',
+      :yaml => 'application/x-yaml'
+    }.freeze
+    
     def get(url, payload={}, format=:json)
       request(:get, url, payload, format)
     end
@@ -26,10 +32,10 @@ module CrashHook
         :method       => method,
         :url          => url,
         :payload      => payload,
+        :headers      => {:content_type => CONTENT_TYPES[format]},
         :timeout      => TIMEOUT,
         :open_timeout => OPEN_TIMEOUT
       }
-      opts.merge!(:content_type => :json) if format == :json
       
       RestClient::Request.execute(opts)
     end

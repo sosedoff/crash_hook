@@ -1,4 +1,5 @@
 require 'multi_json'
+require 'yaml'
 
 module CrashHook
   class Payload
@@ -47,6 +48,12 @@ module CrashHook
       @extra_params.delete(:crash)
       @extra_params.delete('crash')
       MultiJson.encode({:crash => self.to_hash}.merge(@extra_params))
+    end
+    
+    # Returns YAML representation of payload
+    # 
+    def to_yaml
+      YAML.dump({:crash => self.to_hash})
     end
     
     # Returns XML representation of payload

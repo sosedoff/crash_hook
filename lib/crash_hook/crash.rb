@@ -23,9 +23,8 @@ module CrashHook
     
     # Send notification to the endpoint
     def notify
-      data = @config.format == :json ? @payload.to_json : @payload.to_hash
       begin
-        request(@config.method, @config.url, data, @config.format)
+        request(@config.method, @config.url, format_data(data), @config.format)
         true
       rescue Exception => ex
         log_error(ex) if @config.has_logger?
@@ -36,11 +35,25 @@ module CrashHook
     private
     
     # Log CrashHook delivery error
+    #
     def log_error(ex)
       if @config.logger.respond_to?(:error)
         @config.logger.error("CrashHook Error: #{ex.inspect}")
       elsif @config.logger.kind_of?(IO)
         @config.logger.puts("CrashHook Error: #{ex.inspect}")
+      end
+    end
+    
+    # Returns data formatted into config's format
+    # 
+    def format_data
+      case @config.format
+      when :json
+        @payload.to_json
+      when :yaml
+        @payload.to_yaml
+      else
+        @payload.to_hash
       end
     end
   end

@@ -5,7 +5,7 @@ module CrashHook
   
   class Configuration
     ALLOWED_METHODS = [:get, :post, :put, :delete].freeze
-    ALLOWED_FORMATS = [:form, :json]
+    ALLOWED_FORMATS = [:form, :json, :yaml]
     
     attr_reader :url
     attr_reader :method
