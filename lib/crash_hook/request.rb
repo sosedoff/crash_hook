@@ -22,14 +22,16 @@ module CrashHook
     protected
     
     def request(method, url, payload, format)
-      RestClient::Request.execute(
+      opts = {
         :method       => method,
         :url          => url,
         :payload      => payload,
-        :headers      => {},
         :timeout      => TIMEOUT,
         :open_timeout => OPEN_TIMEOUT
-      )
+      }
+      opts.merge!(:content_type => :json) if format == :json
+      
+      RestClient::Request.execute(opts)
     end
   end
 end
