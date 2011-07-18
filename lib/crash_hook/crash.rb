@@ -21,7 +21,10 @@ module CrashHook
           :backtrace  => exception.backtrace,
           :timestamp  => Time.now.utc
         },
-        :environment  => env
+        :environment  => env,
+        :crash_hook   => {
+          :version    => CrashHook::VERSION
+        }
       }
     end
     
