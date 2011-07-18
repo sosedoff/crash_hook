@@ -1,6 +1,5 @@
 require 'crash_hook/version'
 require 'crash_hook/errors'
-require 'crash_hook/helpers'
 require 'crash_hook/configuration'
 require 'crash_hook/middleware'
 require 'crash_hook/crash'
