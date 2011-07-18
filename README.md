@@ -51,6 +51,25 @@ You can use these options during configuration:
 - :ignore &mdash; Array of exception class names you want to ignore, *(default: [])*
 - :logger &mdash; Set a logger for delivery errors, *(default: nil)*
 
+## Payload
+
+Each request has a following structure:
+
+    crash:
+      exception:
+        class_name: "Exception class name"
+        message: "Exception message"
+        backtrace: "Exception backtrace"
+      environment: "rack request environment"
+      framework: "rails"
+      version: "crash_hook version"
+      
+Framework is being auto-detected and could one of the following:
+
+- rack (default)
+- rails
+- sinatra
+
 ## License
 
 Copyright © 2011 Dan Sosedoff.
