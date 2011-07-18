@@ -2,7 +2,7 @@
 
 CrashHook is a rack middleware for handling exception in your rack-based application.
 
-It sends a http request with exception information, backtrace and environment details to your url via post method.
+It sends a http request with exception information, backtrace and environment details to your url via specified method.
 
 ## Installation
 
@@ -12,35 +12,42 @@ It sends a http request with exception information, backtrace and environment de
 
 In Rails 3 apps:
 
-    YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
-      :url => 'YOUR_URL'
-    }
-    
+``` ruby
+YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
+  :url => 'YOUR_URL'
+}
+```
+
 You can add any exceptions into ignore list:
 
-    YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
-      :url => 'YOUR_URL',
-      :ignore => [
-        'NoMethodError'
-      ]
-    }
+``` ruby
+YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
+  :url => 'YOUR_URL',
+  :ignore => [
+    'NoMethodError'
+  ]
+}
+```
 
 In other rack apps (config.ru):
 
-    require 'crash_hook'
+``` ruby
+require 'crash_hook'
 
-    use CrashHook::Middleware {
-      :url => 'YOUR_URL',
-      :method => :post
-    }
+use CrashHook::Middleware {
+  :url => 'YOUR_URL',
+  :method => :post
+}
+```
     
 ## Options
 
 You can use these options during configuration:
 
 - :url    &mdash; Target URL (**required**)
-- :method &mdash; Request method (*default: :post*)
+- :method &mdash; Request method *(default: :post)*
 - :params &mdash; Extra parameters for the request *(ex.: api key, app ID, etc.)*
+- :format &mdash; Report format (:form, :json), *(default: json)*
 - :ignore &mdash; Array of exception class names you want to ignore
 
 ## License

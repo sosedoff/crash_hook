@@ -1,4 +1,5 @@
 require 'rest-client'
+require 'multi_json'
 
 module CrashHook
   class Crash
@@ -30,8 +31,15 @@ module CrashHook
     
     # Send notification to the endpoint
     def notify
+      headers = {}
+      data = {:crash => @payload}.merge(@config.extra_params)
+      if @config.format == :json
+        data = MultiJson.encode(data) 
+        headers[:content_type] = 'application/json'
+      end
+      
       begin
-        RestClient.send(@config.method, @config.url, {:crash => @payload}.merge(@config.extra_params))
+        RestClient.send(@config.method, @config.url, data, headers)
         true
       rescue Exception => ex
         $stderr.puts("CrashHook Error: #{ex.inspect}")
