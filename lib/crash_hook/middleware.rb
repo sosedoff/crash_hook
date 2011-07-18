@@ -11,8 +11,7 @@ module CrashHook
       @app.call(env)
       rescue Exception => exception
       unless @config.ignore_exception?(exception.class.to_s)
-        ex = CrashHook::Crash.new(@config, exception, env)
-        ex.notify
+        CrashHook::Crash.new(@config, exception, env).notify
       end
       raise exception
     end
