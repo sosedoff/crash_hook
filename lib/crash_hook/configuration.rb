@@ -9,10 +9,12 @@ module CrashHook
     attr_reader :url
     attr_reader :method
     attr_reader :ignore
+    attr_reader :extra_params
     
     # Initialize configuration. Options:
     #   :url    => Target url (required)
     #   :method => Request method (default: post)
+    #   :params => Additional parameters for the request
     #   :ignore => Set of exception classes to ignore
     #
     def initialize(options={})
@@ -20,8 +22,9 @@ module CrashHook
         raise CrashHook::ConfigurationError, ":url option required!"
       end
       
-      @url    = options[:url].to_s
-      @method = options.key?(:method) ? options[:method].to_sym : :post
+      @url          = options[:url].to_s
+      @method       = options.key?(:method) ? options[:method].to_sym : :post
+      @extra_params = options[:params].kind_of?(Hash) ? options[:params] : {}
       
       unless ALLOWED_METHODS.include?(@method)
         raise CrashHook::ConfigurationError, "#{@method} is not a valid :method option."

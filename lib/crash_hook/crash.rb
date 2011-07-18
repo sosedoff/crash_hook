@@ -31,7 +31,7 @@ module CrashHook
     # Send notification to the endpoint
     def notify
       begin
-        RestClient.send(@config.method, @config.url, :crash => @payload)
+        RestClient.send(@config.method, @config.url, {:crash => @payload}.merge(@config.extra_params))
         true
       rescue Exception => ex
         $stderr.puts("CrashHook Error: #{ex.inspect}")

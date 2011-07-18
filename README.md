@@ -33,6 +33,15 @@ In other rack apps (config.ru):
       :url => 'YOUR_URL',
       :method => :post
     }
+    
+## Options
+
+You can use these options during configuration:
+
+- :url    &mdash; Target URL (**required**)
+- :method &mdash; Request method (*default: :post*)
+- :params &mdash; Extra parameters for the request *(ex.: api key, app ID, etc.)*
+- :ignore &mdash; Array of exception class names you want to ignore
 
 ## License
 
