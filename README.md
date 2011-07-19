@@ -31,7 +31,15 @@ YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
 
 ### Sinatra
 
-```ruby
+Configuration block
+
+``` ruby
+CrashHook.configure(:url => 'YOUR_URL')
+```
+
+And insert the following into error handler:
+
+``` ruby
 errors do
   CrashHook.notify(request.env['sinatra.error'], request.env)
   # your stuff, render 500, etc
