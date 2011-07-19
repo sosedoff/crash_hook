@@ -24,7 +24,7 @@ module CrashHook
     # Send notification to the endpoint
     def notify
       begin
-        request(@config.method, @config.url, format_data(data), @config.format)
+        request(@config.method, @config.url, format_data(@payload), @config.format)
         true
       rescue Exception => ex
         log_error(ex) if @config.has_logger?
