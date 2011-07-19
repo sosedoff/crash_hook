@@ -10,7 +10,7 @@ It sends a http request with exception information, backtrace and environment de
 
 ## Usage
 
-In Rails 3 apps:
+### Rails 3
 
 ``` ruby
 YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
@@ -28,6 +28,20 @@ YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
   ]
 }
 ```
+
+### Sinatra
+
+```ruby
+errors do
+  CrashHook.notify(request.env['sinatra.error'], request.env)
+end
+
+Please note that this will work only in production mode,
+since in development mode Sinatra is overriding this method with a nice looking exception backtrace page.
+
+```
+
+### General
 
 In other rack apps (config.ru):
 
