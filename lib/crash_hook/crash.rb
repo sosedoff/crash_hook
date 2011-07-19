@@ -24,7 +24,7 @@ module CrashHook
     # Send notification to the endpoint
     def notify
       begin
-        request(@config.method, @config.url, format_data(@payload), @config.format)
+        request(@config.method, @config.url, payload_data, @config.format)
         true
       rescue Exception => ex
         log_error(ex) if @config.has_logger?
@@ -46,7 +46,7 @@ module CrashHook
     
     # Returns data formatted into config's format
     # 
-    def format_data
+    def payload_data
       case @config.format
       when :json
         @payload.to_json
