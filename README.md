@@ -61,6 +61,18 @@ use CrashHook::Middleware {
   :method => :post
 }
 ```
+
+### Usage with CrashServer
+
+In order to use crash-server application you need to configure your app like this:
+
+``` ruby
+YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
+  :url => 'YOUR_URL',
+  :params => {:api_key => 'API_KEY'},
+  :logger => Rails.logger
+}
+```
     
 ## Options
 
