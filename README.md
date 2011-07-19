@@ -34,12 +34,12 @@ YOUR_RAILS_APP::Application.config.middleware.use CrashHook::Middleware, {
 ```ruby
 errors do
   CrashHook.notify(request.env['sinatra.error'], request.env)
+  # your stuff, render 500, etc
 end
+```
 
 Please note that this will work only in production mode,
 since in development mode Sinatra is overriding this method with a nice looking exception backtrace page.
-
-```
 
 ### General
 
